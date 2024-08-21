@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="ae0f6612-32f3-44b4-aaed-2e0968689254" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="demoapiFlow" doc:id="63f6b99d-3437-413d-8737-e22999527ae6" >
+		<http:listener doc:name="Listener" doc:id="b164cab5-2d3f-4b39-b87b-9cbfd82da30d" config-ref="HTTP_Listener_config" path="/demo"/>
+		<logger level="INFO" doc:name="Logger" doc:id="3e0b6a61-ccba-4ac6-878b-f450e7dee96b" message='#["demo class"]'/>
+		<logger level="INFO" doc:name="Logger" doc:id="8d67f972-a061-4ae9-8539-65d5e00d9efe" message='#["back to main flow"]' />
+		<flow-ref doc:name="Flow Reference" doc:id="8934f053-b401-46ed-bffe-86f482adc73d" name="demoapiSubFlowAPI"/>
+		<flow-ref doc:name="Flow Reference" doc:id="72a6b339-645d-44c1-8be2-2184a1d11eef" name="demoPrivateflowAPI"/>
+		<flow-ref doc:name="Flow Reference" doc:id="5729f6b1-fca1-4b9b-8f92-69d53b7e3f4d" name="Subflow2"/>
+	</flow>
+	<sub-flow name="demoapiSubFlowAPI" doc:id="0ed076f3-c31c-4206-bc43-7a890eaf3e5c" >
+		<logger level="INFO" doc:name="Logger" doc:id="bfd77b1c-3c9d-4245-84bc-4cbf2edd66f6" message='#["sub flow 1"]'/>
+	</sub-flow>
+	<flow name="demoPrivateflowAPI" doc:id="07507856-8372-4e33-8810-bf256df02147" >
+		<logger level="INFO" doc:name="Logger" doc:id="8ec20841-cb4b-4e9c-a859-b913cb513f3d" message='#["private flow 1"]'/>
+	</flow>
+	<sub-flow name="Subflow2" doc:id="9b649d35-dfe4-4071-bd00-97e8948ad875" >
+		<logger level="INFO" doc:name="Logger" doc:id="414274ba-3f5b-48ed-ae9c-4b31e4ca68c4" message='#["subflow 2"]'/>
+	</sub-flow>
+</mule>
